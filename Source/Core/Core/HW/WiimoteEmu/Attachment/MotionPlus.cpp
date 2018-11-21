@@ -21,25 +21,43 @@ MotionPlus::MotionPlus(ExtensionReg& reg)
  // m_id = motion_plus_id;
 }
 
-void MotionPlus::GetState(u8* const data, bool active_extension)
+void MotionPlus::GetState(u8* const data, WiimoteEmu::Attachment* attachment, bool active_extension)
 {
-  wm_motionplus_data motionplus_data = {};
-  motionplus_data.yaw1 = 0;
-  motionplus_data.yaw2 = 0;
-  motionplus_data.yaw_slow = 1;
+  if (m_report_ext_data)
+  {
+    wm_motionplus_data motionplus_data = {}; // TODO: get extension data
+    motionplus_data.extension_connected = active_extension;
+    motionplus_data.is_mp_data = 0;
+    motionplus_data.zero = 0;
 
-  motionplus_data.pitch1 = 0;
-  motionplus_data.pitch2 = 0;
-  motionplus_data.pitch_slow = 1;
+    std::memcpy(data, &motionplus_data, sizeof(wm_motionplus_data));
 
-  motionplus_data.roll1 = 0;
-  motionplus_data.roll2 = 0;
-  motionplus_data.roll_slow = 1;
+    m_report_ext_data = false;
+  }
+  else
+  {
+    wm_motionplus_data motionplus_data = {};
+    motionplus_data.yaw1 = 0;
+    motionplus_data.yaw2 = 0;
+    motionplus_data.yaw_slow = 1;
 
-  motionplus_data.extension_connected = active_extension;
-  motionplus_data.is_mp_data = 1;
-  motionplus_data.zero = 0;
+    motionplus_data.pitch1 = 0;
+    motionplus_data.pitch2 = 0;
+    motionplus_data.pitch_slow = 1;
 
-  std::memcpy(data, &motionplus_data, sizeof(wm_motionplus_data));
+    motionplus_data.roll1 = 0;
+    motionplus_data.roll2 = 0;
+    motionplus_data.roll_slow = 1;
+
+    motionplus_data.extension_connected = active_extension;
+    motionplus_data.is_mp_data = 1;
+    motionplus_data.zero = 0;
+
+    std::memcpy(data, &motionplus_data, sizeof(wm_motionplus_data));
+    if (mode != NO_PASSTHROUGH)
+    {
+      m_report_ext_data = true;
+    }
+  }
 }
 }

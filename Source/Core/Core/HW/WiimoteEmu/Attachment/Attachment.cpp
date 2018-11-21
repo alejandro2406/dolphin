@@ -58,10 +58,12 @@ namespace ControllerEmu
 {
 void Extension::GetState(u8* const data)
 {
+  WiimoteEmu::Attachment* attachment =
+      static_cast<WiimoteEmu::Attachment*>(attachments[active_extension].get());
   if (motion_plus_active)
-    motion_plus.get()->GetState(data, active_extension);
+    motion_plus.get()->GetState(data, attachment, active_extension != WiimoteEmu::EXT_NONE);
   else
-    static_cast<WiimoteEmu::Attachment*>(attachments[active_extension].get())->GetState(data);
+    attachment->GetState(data);
 }
 
 bool Extension::IsButtonPressed() const

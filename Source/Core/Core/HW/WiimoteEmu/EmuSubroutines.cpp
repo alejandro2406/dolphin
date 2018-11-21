@@ -332,12 +332,12 @@ void Wiimote::WriteData(const wm_write_data* const wd)
     }
     else if (&m_reg_motion_plus == region_ptr)
     {
-      // activate/deactivate motion plus
+      // initialize motion plus
       if (0x55 == m_reg_motion_plus.activated)
       {
         // maybe hacky
         m_reg_motion_plus.activated = 0;
-        m_extension->motion_plus_active = false;
+        //m_extension->motion_plus_active = false;
 
         RequestStatus();
       }
@@ -345,7 +345,8 @@ void Wiimote::WriteData(const wm_write_data* const wd)
       {
         if (!m_extension->motion_plus_active)
         {
-          m_extension->motion_plus_active = true;  // motion plus
+          m_extension->motion_plus_active = true;
+          m_extension->motion_plus->mode = wd->data[0];
           if (m_extension->active_extension == 0)
             RequestStatus();
         }

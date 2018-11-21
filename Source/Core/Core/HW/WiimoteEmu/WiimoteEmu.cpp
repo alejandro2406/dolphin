@@ -309,6 +309,7 @@ void Wiimote::Reset()
   // will make the first Update() call send a status request
   // the first call to RequestStatus() will then set up the status struct extension bit
   m_extension->active_extension = -1;
+  m_extension->motion_plus_active = false;
 
   // eeprom
   memset(m_eeprom, 0, sizeof(m_eeprom));
