@@ -30,6 +30,7 @@
 #include "Core/HW/WiimoteEmu/Attachment/Guitar.h"
 #include "Core/HW/WiimoteEmu/Attachment/Nunchuk.h"
 #include "Core/HW/WiimoteEmu/Attachment/Turntable.h"
+#include "Core/HW/WiimoteEmu/Attachment/MotionPlus.h"
 #include "Core/HW/WiimoteEmu/MatrixMath.h"
 #include "Core/HW/WiimoteReal/WiimoteReal.h"
 #include "Core/Movie.h"
@@ -70,7 +71,7 @@ static const u8 eeprom_data_0[] = {
 };
 // clang-format on
 
-static const u8 motion_plus_id[] = {0x00, 0x00, 0xA6, 0x20, 0x00, 0x05};
+static const u8 motion_plus_inactive_id[] = {0x00, 0x00, 0xA6, 0x20, 0x00, 0x05};
 
 static const u8 eeprom_data_16D0[] = {0x00, 0x00, 0x00, 0xFF, 0x11, 0xEE, 0x00, 0x00,
                                       0x33, 0xCC, 0x44, 0xBB, 0x00, 0x00, 0x66, 0x99,
@@ -322,7 +323,7 @@ void Wiimote::Reset()
   memset(&m_reg_ext, 0, sizeof(m_reg_ext));
   memset(&m_reg_motion_plus, 0, sizeof(m_reg_motion_plus));
 
-  memcpy(&m_reg_motion_plus.ext_identifier, motion_plus_id, sizeof(motion_plus_id));
+  memcpy(&m_reg_motion_plus.ext_identifier, motion_plus_inactive_id, sizeof(motion_plus_inactive_id));
 
   // status
   memset(&m_status, 0, sizeof(m_status));
@@ -412,6 +413,8 @@ Wiimote::Wiimote(const unsigned int index) : m_index(index), ir_sin(0), ir_cos(1
   m_extension->attachments.emplace_back(new WiimoteEmu::Guitar(m_reg_ext));
   m_extension->attachments.emplace_back(new WiimoteEmu::Drums(m_reg_ext));
   m_extension->attachments.emplace_back(new WiimoteEmu::Turntable(m_reg_ext));
+
+  m_extension->motion_plus = std::make_unique<WiimoteEmu::MotionPlus>(m_reg_ext);
 
   // rumble
   groups.emplace_back(m_rumble = new ControllerEmu::ControlGroup(_trans("Rumble")));

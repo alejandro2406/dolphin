@@ -175,6 +175,7 @@
     <ClCompile Include="HW\WiimoteEmu\Attachment\Classic.cpp" />
     <ClCompile Include="HW\WiimoteEmu\Attachment\Drums.cpp" />
     <ClCompile Include="HW\WiimoteEmu\Attachment\Guitar.cpp" />
+    <ClCompile Include="HW\WiimoteEmu\Attachment\MotionPlus.cpp" />
     <ClCompile Include="HW\WiimoteEmu\Attachment\Nunchuk.cpp" />
     <ClCompile Include="HW\WiimoteEmu\Attachment\Turntable.cpp" />
     <ClCompile Include="HW\WiimoteEmu\EmuSubroutines.cpp" />
@@ -362,6 +363,7 @@
     <ClInclude Include="FifoPlayer\FifoRecorder.h" />
     <ClInclude Include="GeckoCode.h" />
     <ClInclude Include="GeckoCodeConfig.h" />
+    <ClInclude Include="HW\WiimoteEmu\Attachment\MotionPlus.h" />
     <ClInclude Include="HLE\HLE.h" />
     <ClInclude Include="HLE\HLE_Misc.h" />
     <ClInclude Include="HLE\HLE_OS.h" />

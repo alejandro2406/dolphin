@@ -10,6 +10,7 @@
 
 #include "Common/CommonTypes.h"
 #include "InputCommon/ControllerEmu/ControlGroup/ControlGroup.h"
+#include "Core/HW/WiimoteEmu/Attachment/MotionPlus.h"
 
 namespace ControllerEmu
 {
@@ -24,6 +25,8 @@ public:
   bool IsButtonPressed() const;
 
   std::vector<std::unique_ptr<EmulatedController>> attachments;
+  std::unique_ptr<WiimoteEmu::MotionPlus> motion_plus;
+  bool motion_plus_active = false;
 
   int switch_extension = 0;
   int active_extension = 0;

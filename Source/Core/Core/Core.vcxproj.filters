@@ -910,6 +910,7 @@
     <ClCompile Include="Config\WiimoteInputSettings.cpp">
       <Filter>Config</Filter>
     </ClCompile>
+    <ClCompile Include="HW\WiimoteEmu\Attachment\MotionPlus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BootManager.h" />
@@ -1610,6 +1611,7 @@
     <ClInclude Include="Config\WiimoteInputSettings.h">
       <Filter>Config</Filter>
     </ClInclude>
+    <ClInclude Include="HW\WiimoteEmu\Attachment\MotionPlus.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

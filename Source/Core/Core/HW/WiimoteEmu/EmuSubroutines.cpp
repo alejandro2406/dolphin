@@ -205,7 +205,7 @@ void Wiimote::RequestStatus(const wm_request_status* const rs)
   HandleExtensionSwap();
 
   // update status struct
-  m_status.extension = m_extension->active_extension ? 1 : 0;
+  m_status.extension = (m_extension->active_extension || m_extension->motion_plus_active) ? 1 : 0;
 
   // set up report
   u8 data[8];
@@ -337,8 +337,18 @@ void Wiimote::WriteData(const wm_write_data* const wd)
       {
         // maybe hacky
         m_reg_motion_plus.activated = 0;
+        m_extension->motion_plus_active = false;
 
         RequestStatus();
+      }
+      if (region_offset == 0xfe)  // activate motion plus
+      {
+        if (!m_extension->motion_plus_active)
+        {
+          m_extension->motion_plus_active = true;  // motion plus
+          if (m_extension->active_extension == 0)
+            RequestStatus();
+        }
       }
     }
   }
