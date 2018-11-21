@@ -59,7 +59,7 @@ namespace ControllerEmu
 void Extension::GetState(u8* const data)
 {
   if (motion_plus_active)
-    static_cast<WiimoteEmu::Attachment*>(motion_plus.get())->GetState(data);
+    motion_plus.get()->GetState(data, active_extension);
   else
     static_cast<WiimoteEmu::Attachment*>(attachments[active_extension].get())->GetState(data);
 }

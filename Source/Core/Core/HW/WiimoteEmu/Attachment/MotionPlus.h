@@ -8,11 +8,11 @@
 
 namespace WiimoteEmu
 {
-class MotionPlus : public Attachment
+class MotionPlus
 {
 public:
   explicit MotionPlus(ExtensionReg& reg);
 
-  void GetState(u8* const data) override;
+  void GetState(u8* const data, bool active_extension);
 };
 }
